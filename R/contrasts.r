@@ -92,8 +92,9 @@ getNumericFromCharContrast <- function(object, contrast, expanded) {
   }
   contrastFactor <- contrast[1]
   colData <- colData(object)
-  cont <- rep(0, length(nrow(colData)))
-  cont(which(colData[,contrastFactor]==contrast[2])) <- 1
+  cont <- rep(NA, nrow(colData))
+  cont[which(colData[,contrastFactor]==contrast[2])] <- 1
+  cont[which(colData[,contrastFactor]==contrast[3])] <- -1
   return(cont)
   if (!contrastFactor %in% names(colData(object))) {
     stop(paste(contrastFactor,"should be the name of a factor in the colData of the DESeqDataSet"))
@@ -191,3 +192,5 @@ resultsNames(object), prefixed by",contrastFactor))
   stop("You've uncovered a corner case! Please contact the maintainer 
          with your dataset and reproducible steps for help.")
 }
+
+
