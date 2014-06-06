@@ -1,0 +1,16 @@
+{
+    "contents" : "Package: GSTT\nType: Package\nTitle: Gene set enrichment analysis using t tests\nVersion: 1.0\nDate: 2014-06-05\nAuthor: Yasir Suhail\nMaintainer: Yasir Suhail <yasir@jhmi.edu>\nDescription: Computes the statistical significance of the presence of\n    differentially expressed genes in a gene set by the t-test of the z-scores\n    of genes within and outside the gene set.\nLicense: TBD\n",
+    "created" : 1402021660469.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1810862540",
+    "id" : "1C562F5D",
+    "lastKnownWriteTime" : 1402030438,
+    "path" : "~/work/GSTT/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "dcf"
+}
