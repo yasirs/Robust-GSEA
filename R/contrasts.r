@@ -90,11 +90,11 @@ getNumericFromCharContrast <- function(object, contrast, expanded) {
   if (contrast[2] == contrast[3]) {
     stop(paste(contrast[2],"and",contrast[3],"should be different level names"))
   }
+  contrastFactor <- contrast[1]
   colData <- colData(object)
   cont <- rep(0, length(nrow(colData)))
   cont(which(colData[,contrastFactor]==contrast[2])) <- 1
   return(cont)
-  contrastFactor <- contrast[1]
   if (!contrastFactor %in% names(colData(object))) {
     stop(paste(contrastFactor,"should be the name of a factor in the colData of the DESeqDataSet"))
   }
