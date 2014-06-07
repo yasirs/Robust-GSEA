@@ -3,10 +3,14 @@
 \alias{diff.exp}
 \title{Compute the differential expression for all permutations for a GSTTDataSet object}
 \usage{
-diff.exp(object)
+diff.exp(object, contrast, name, ...)
 }
 \arguments{
 \item{object}{an object of class GSTTDataSet}
+
+\item{contrast}{the contrast to compare the effects or levels on the expression, see \code{DESeq2::results}}
+
+\item{name}{the name of the main effect, if not using contrast}
 }
 \value{
 an object of class GSTTDataSet with the p-values computed for all sample permutations
@@ -14,5 +18,8 @@ an object of class GSTTDataSet with the p-values computed for all sample permuta
 \description{
 \code{diff.exp} runs DESeq for the dataset and all its sample permutations needed to get
 the gene set significance levels.
+}
+\seealso{
+\code{DESeq2::results}
 }
 

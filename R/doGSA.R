@@ -14,11 +14,10 @@ setClass("GSTTResults",
 
 setClass("GSTTDataSet",
 	representation(dds="DESeqDataSet",
-		dds.contrast="ANY",
 		dds.results="DESeqResults",
 		col.groups="list",
 		permuted.results="list"),
-	prototype(dds=NULL, dds.results=NULL, col.groups=NULL, permuted.results=NULL, dds.contrast=NULL))
+	prototype(dds=NULL, dds.results=NULL, col.groups=NULL, permuted.results=NULL))
 
 
 
@@ -46,7 +45,19 @@ GSTTDataSetFromMatrix <- function(countData, colData, design, ...) {
   # gds@dds.contrast <- c("time",60,0)
   return(gds)
 }
-  
+
+#' Get a GSTTDataSet from a DESeq2 data saet
+#' @param dds an object of class DESeqDataSet
+#' @return an object of class GSTTDataSet
+#' @export
+#' @examples
+#' example(DESeq)
+#' gds <- GSTTDataSetFromDDS(dds)
+GSTTDataSetFromDDS <- function(dds) {
+  gds <- new("GSTTDataSet")
+  gds@dds <- dds
+  return(gds)
+}
 
 sampleData <- function() {
 	library("pasilla")
@@ -71,15 +82,19 @@ sampleData <- function() {
 #' the gene set significance levels.
 #' 
 #' @param object an object of class GSTTDataSet
+#' @param contrast the contrast to compare the effects or levels on the expression, see \code{DESeq2::results}
+#' @param name the name of the main effect, if not using contrast
 #' @return an object of class GSTTDataSet with the p-values computed for all sample permutations
 #' @export
-diff.exp <- function(object) {
+#' @seealso \code{DESeq2::results}
+diff.exp <- function(object, contrast, name, ...) {
 	if (is.null(object@dds)) {
 		print("Need data set! Exiting ...")
 		return(object)
 	}
 	object@dds <- DESeq(object@dds)
-	object@dds.results = results(object@dds, object@dds.contrast)
+	object@dds.results = results(object@dds, contrast, name, ...)
+  object@col.groups <- getContrast(object@dds, contrast, name)
 	object@dds.results[,"zscore"] <- qnorm(1-object@dds.results[,"pvalue"]/2)
 	object@dds.results[which(object@dds.results[,"zscore"]>10),"zscore"] = 10
 	return(object)
@@ -133,7 +148,18 @@ read.sets <- function(fname) {
 }
 
 
-get.permuted.results <- function(object) {
+
+#' Run permutations for the GSTTDataSet
+#' 
+#' @param object of class GSTTDataSet
+#' @return object of class GSTTDataSet with the slot permuted.results filled
+#' @export
+#' @examples
+#' example(DESeq)
+#' gstt <- GSTTDataSetFromDDS(dds)
+#' gstt <- diff.exp(gstt)
+#' gstt <- run.permutations(gstt)
+run.permutations <- function(object) {
 	if (is.null(object@dds.results)) object <- diff.exp(object)
 	perm_results = list()
 	col.data <- colData(object@dds)
