@@ -89,17 +89,17 @@ get.gstt.results <- function(object, gene_sets) {
 	path_fdr_1_pval <- median(bestPathway_pvals)
 	path_fdr_.05_pval <- quantile(bestPathway_pvals, 0.05)
 	path_fdr_1 <- sapply(which(Pathway_pvals < path_fdr_1_pval), function(ii) names(gene_sets)[[ii]])
-	path_fdr_.05 <- sapply(which(Pathway_pvals < path_fdr_.05_pval), function(ii) names(gene_sets[[ii]])
+	path_fdr_.05 <- sapply(which(Pathway_pvals < path_fdr_.05_pval), function(ii) names(gene_sets[[ii]]))
 
 	gene_fdr_.05_pval <- quantile(bestGene_pvals, .05)
 	gene_fdr_.05 <- sapply(which(object@dds.results[,"pvalue"]<gene_fdr_.05_pval), function(ii) gene_names[ii])
 	gene_fdr_1_pval <- median(bestGene_pvals)
 	gene_fdr_1 <- sapply(which(object@dds.results[,"pvalue"]<gene_fdr_1_pval), function(ii) gene_names[ii])
 
-	gene_sets_.05 <- sapply(gene_sets, function(x) list(x,length(intersect(x, gene_fdr_.05))))
-	sets_table_.05 <- outer(path_fdr_.05, path_fdr_.05, Vectorize(function(x,y) {list(intersect(intersect(gene_sets_.05[[x]],gene_sets_.05[[y]]),gene_fdr_.05))}))
-	gene_sets_1 <- lapply(gene_sets, function(x) list(x,length(intersect(x, gene_fdr_1))))
-	sets_table_1 <- outer(path_fdr_1, path_fdr_1, Vectorize(function(x,y) {list(intersect(intersect(gene_sets_1[[x]],gene_sets_1[[y]][[2]]),gene_fdr_1))}))
+	#gene_sets_.05 <- sapply(gene_sets, function(x) list(x,length(intersect(x, gene_fdr_.05))))
+	sets_table_.05 <- outer(path_fdr_.05, path_fdr_.05, Vectorize(function(x,y) {list(intersect(intersect(gene_sets[[x]],gene_sets[[y]]),gene_fdr_.05))}))
+	##gene_sets_1 <- lapply(gene_sets, function(x) list(x,length(intersect(x, gene_fdr_1))))
+	sets_table_1 <- outer(path_fdr_1, path_fdr_1, Vectorize(function(x,y) {list(intersect(intersect(gene_sets[[x]],gene_sets[[y]][[2]]),gene_fdr_1))}))
 
 	gsr <- new("GSTTResults")
 	gsr@best.pvals.set  <- bestPathway_pvals
