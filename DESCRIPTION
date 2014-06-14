@@ -8,4 +8,6 @@ Maintainer: Yasir Suhail <yasir@jhmi.edu>
 Description: Computes the statistical significance of the presence of
     differentially expressed genes in a gene set by the t-test of the z-scores
     of genes within and outside the gene set.
+Depends:
+    DESeq2
 License: TBD

@@ -49,6 +49,10 @@ diff.exp <- function(object, contrast, name, ...) {
   return(object)
 }
 
+#' get balanced permutations
+#' @return balanced permutations
+#' 
+#' @export
 get.balanced.permutations <- function(cases, controls) {
   getgroups <- function(ii, case1s, control1s) {
     caseInd = ii[[1]]
@@ -87,12 +91,12 @@ get.balanced.permutations <- function(cases, controls) {
 #' 
 #' @param object of class GSTTDataSet
 #' @return object of class GSTTDataSet with the slot permuted.results filled
-#' @export
 #' @examples
 #' example(DESeq)
 #' gstt <- GSTTDataSetFromDDS(dds)
 #' gstt <- diff.exp(gstt)
 #' gstt <- run.permutations(gstt)
+#' @export
 run.permutations <- function(object) {
   if (is.null(object@dds.results)) {
     message("Differential expression has not been computed for the object.\n

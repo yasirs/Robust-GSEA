@@ -1,8 +1,6 @@
 
 
 
-
-
 makeData <- function() {
   m <- as.matrix(read.table('transcripts.counts.matrix'))
   all_genes <- row.names(m)
@@ -42,12 +40,7 @@ sampleData <- function(num.genes=5000) {
   if (num.genes>nrow(countData)) num.genes=nrow(countData)
 	countData <- countData[1:num.genes,]
 	colData <- pData(pasillaGenes)[,c("condition","type")]
-	dds <- DESeqDataSetFromMatrix(countData= countData,colData= colData,design= ~ condition)
-	dds$condition <- factor(dds$condition,levels=c("untreated","treated"))
-        gds <- new("GSTTDataSet")
-        gds@dds <- dds
-	gds@dds.contrast <- c("condition","treated","untreated")
-	gds@col.groups <- list(c(1,2,3),c(4,5,6,7))
+	gds <- GSTTDataSetFromMatrix(countData= countData,colData= colData,design= ~ condition)
 	return(gds)
 }
 

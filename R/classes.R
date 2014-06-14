@@ -1,6 +1,3 @@
-library(DESeq2)
-
-
 setClass("GSTTResults",
          representation(best.pvals.set="numeric",
                         best.pvals.gene="numeric",
