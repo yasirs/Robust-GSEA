@@ -4,6 +4,8 @@
 #' @param colData a data frame where rows represents samples (columns of contData) and columns represent properties of samples
 #' @return a GSTTDataSet object
 GSTTDataSetFromMatrix <- function(countData, colData, design, ...) {
+  require(DESeq2)
+
   dds <- DESeqDataSetFromMatrix(countData=countData, colData=colData, design=design, ...)
   gds <- new("GSTTDataSet")
   gds@dds <- dds

@@ -3,6 +3,7 @@
 export(GSTTDataSetFromDDS)
 export(diff.exp)
 export(get.balanced.permutations)
+export(get.gstt.results)
 export(getContrast)
 export(qqpermuted)
 export(run.permutations)

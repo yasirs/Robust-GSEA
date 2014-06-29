@@ -49,7 +49,11 @@ sampleData <- function(num.genes=5000) {
 	
 
 
-
+#' Compute the p-values for the enrichment of differentially expressed genes in the given gene sets/
+#' @param object of class GSTTDataSet
+#' @param gene_sets a list of gene sets
+#' @return object of class GSTTResults
+#' @export
 get.gstt.results <- function(object, gene_sets) {
 	if (is.null(object@permuted.results)) {
 		object <- get.permuted.results(object)
