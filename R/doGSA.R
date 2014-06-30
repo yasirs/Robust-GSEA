@@ -1,8 +1,8 @@
 
 
 
-makeData <- function() {
-  m <- as.matrix(read.table('transcripts.counts.matrix'))
+makeData <- function(fname='transcripts.counts.matrix') {
+  m <- as.matrix(read.table(fname))
   all_genes <- row.names(m)
   colData = data.frame(row.names=colnames(m),replicate=c(11,11,11,12,12,12,13,13,13), time=rep(c(0,15,60),3))
   colData$time <- factor(colData$time, levels=c(0,15,60))
@@ -10,8 +10,6 @@ makeData <- function() {
   dds <- DESeqDataSetFromMatrix(countData=counts, colData=colData, design = ~ time)
   gds <- new("GSTTDataSet")
   gds@dds <- dds
-  gds@col.groups <- list(c(1,4,7),c(3,6,9))
-  gds@dds.contrast <- c("time",60,0)
   return(gds)
 }
 

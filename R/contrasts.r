@@ -39,7 +39,7 @@ getContrast <- function(object, contrast, name) {
     }
   }
   if (missing(name)) {
-    name <- lastCoefName(object)
+    name <- DESeq2:::lastCoefName(object)
   }
   altHypothesis <- match.arg(altHypothesis, choices=c("greaterAbs","lessAbs","greater","less"))
   stopifnot(lfcThreshold >= 0)

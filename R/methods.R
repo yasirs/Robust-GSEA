@@ -3,6 +3,7 @@
 #' @param countData a matrix of transcript abundance counts
 #' @param colData a data frame where rows represents samples (columns of contData) and columns represent properties of samples
 #' @return a GSTTDataSet object
+#' @export
 GSTTDataSetFromMatrix <- function(countData, colData, design, ...) {
   require(DESeq2)
 
