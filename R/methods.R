@@ -39,14 +39,17 @@ GSTTDataSetFromDDS <- function(dds) {
 #' @return an object of class GSTTDataSet with the results and col.groups slots filled
 #' @export
 #' @seealso \code{DESeq2::results}
-diff.exp <- function(object, contrast, name, ...) {
+diff.exp <- function(object, contrast, ...) {
   if (is.null(object@dds)) {
     print("Need data set! Exiting ...")
     return(object)
   }
   object@dds <- DESeq(object@dds)
-  object@dds.results = results(object@dds, contrast, name, ...)
-  object@col.groups <- getContrast(object@dds, contrast, name)
+  object@dds.results = results(object@dds, contrast, ...)
+  if (missing(contrast))
+    object@col.groups <- getContrast(object@dds)
+  else
+    object@col.groups <- getGroupsFromCharContrast(object@dds, contrast)
   object@dds.results[,"zscore"] <- qnorm(1-object@dds.results[,"pvalue"]/2)
   object@dds.results[which(object@dds.results[,"zscore"]>10),"zscore"] = 10
   return(object)
