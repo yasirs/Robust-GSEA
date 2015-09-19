@@ -1,20 +1,22 @@
 ## plot qq plot for uniform data
 
 qqunif <- function(y, ylim, main="Uniform Q-Q Plot", 
-       xlab="Theoretical Quantiles", ylab="Sample Quantiles",
-       plot.it=TRUE, datax=FALSE, ...) {
+                   xlab="Theoretical -log10(Pvalue)", ylab="Sample -log10(Pvalue)",
+                   plot.it=TRUE, datax=FALSE, ...) {
   y <- sort(y)
+  ylogp <- -log10(y)
   x <- (1:length(y))/length(y)
+  xlogp <- -log10(x)
   if (plot.it) {
-    if (missing(ylim)) ylim <- range(y)
+    if (missing(ylim)) ylim <- range(ylogp)
     if (datax) {
-      plot(y,x, main=main, xlab=ylab, ylab=xlab, xlim=ylim, ...)
+      plot(ylogp,xlogp, main=main, xlab=ylab, ylab=xlab, xlim=ylim, ...)
     } else {
-      plot(x, y, main=main, xlab=xlab, ylab=ylab, ylim=ylim, ...)
+      plot(xlogp, ylogp, main=main, xlab=xlab, ylab=ylab, ylim=ylim, ...)
     }
   }
-  invisible(if (datax) list(x = y, y = x) else list(x = x, 
-                                                    y = y))
+  #invisible(if (datax) list(x = y, y = x) else list(x = x, 
+  #                                                  y = y))
 }
 
 #' plot the q-q plot of the pvals of the permuted results
